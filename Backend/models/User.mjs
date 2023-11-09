@@ -1,11 +1,10 @@
-import db from '../db.js';
+import db from '../db.mjs';
 
-db.createCollection("users", {
+db.createCollection("Users", {
     validator: {
        $jsonSchema: {
           bsonType: "object",
-          required: ["username", "password", "email"],
-          uniqueItems: ["email"],
+          required: ["username", "email"],
           properties: {
              username: {
                 bsonType: "string",
@@ -24,4 +23,5 @@ db.createCollection("users", {
        }
     }
 })
+
 

@@ -1,6 +1,6 @@
-import db from '../db.js';
+import db from '../db.mjs';
 
-db.createCollection("notes", {
+db.createCollection("Notes", {
     validator: {
        $jsonSchema: {
           bsonType: "object",
