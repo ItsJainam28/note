@@ -3,6 +3,7 @@ import db from "../db.mjs";
 import {body, validationResult} from "express-validator";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import fetchuser from "../middleware/fetchuser.mjs";
 
 
 const router = express.Router();
@@ -26,8 +27,64 @@ body('email', "Enter a valid email").isEmail(), body("password", "Enter valid Pa
         console.log(jwtToken);
         res.json(jwtToken);
     } catch (error) {res.status(401).send("Please enter unique email id");
-console.log(error);
+        console.log(error);
     }
   });
 
+//Authenticate a user using: POST "/api/auth/login". No login required
+router.post('/login', [body('email', "Enter a valid email").isEmail(), body("password", "Enter valid Password").exists()], async(req, res) => { 
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {email, password} = req.body;
+    try{
+        let user = await db.collection("Users").findOne({email});
+        if(!user){
+            return res.status(400).json({error: "Please try to login with correct credentials"});
+
+        }
+
+        const passwordCompare = await bcrypt.compare(password, user.secPass);
+        console.log(user.password);
+        if(!passwordCompare){
+            return res.status(400).json({error: "Please try to login with correct credentials"});
+        }
+
+        const data = {
+            user: {
+                id: user.id
+            }
+        }
+
+        const jwtToken = jwt.sign(data, JWT_SECRET_KEY);
+        res.json({jwtToken});
+
+
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+//Get loggedin user details using: POST "/api/auth/getuser". Login required
+router.post('/getuser', fetchuser, async(req, res) => { 
+    try{
+        const userId = req.user.id;
+        const user = await db.collection("Users").findOne({userId});
+        newUser = {
+            username: user.username,
+            email: user.email,
+            id: user.id
+        }
+        res.send(newUser);
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+    }
+});
 export default router;
