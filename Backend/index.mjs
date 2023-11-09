@@ -1,7 +1,7 @@
 import express from "express";
 import db from "./db.mjs";
 import authApi from "./routes/auth.mjs";
-import notesApi from "./routes/notes.mjs";
+import notesApi from "./routes/Note.mjs";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -12,7 +12,7 @@ app.use((err, _req, res, next) => {
   });
 
 app.use("/api/auth", authApi)
-app.use("/api/notes", notesApi)
+app.use("/api/Note", notesApi)
 
 app.listen(PORT, ()=>{
   console.log(`Server is running on port: ${PORT}`)

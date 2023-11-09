@@ -4,6 +4,7 @@ import {body, validationResult} from "express-validator";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import fetchuser from "../middleware/fetchuser.mjs";
+import { ObjectId } from "mongodb";
 
 
 const router = express.Router();
@@ -73,12 +74,13 @@ router.post('/login', [body('email', "Enter a valid email").isEmail(), body("pas
 //Get loggedin user details using: POST "/api/auth/getuser". Login required
 router.post('/getuser', fetchuser, async(req, res) => { 
     try{
-        const userId = req.user.id;
+        let userId =  req.user.id;
         const user = await db.collection("Users").findOne({userId});
-        newUser = {
+        let newId = new ObjectId(user.id).toString();
+        let newUser = {
             username: user.username,
             email: user.email,
-            id: user.id
+            Userid: newId
         }
         res.send(newUser);
     }
