@@ -3,7 +3,7 @@ import db from "./db.mjs";
 import authApi from "./routes/auth.mjs";
 import notesApi from "./routes/Note.mjs";
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
