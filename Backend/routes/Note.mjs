@@ -6,6 +6,7 @@ import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
+//GET ALL NOTES
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
   const notes = await db
     .collection("Notes")
@@ -14,6 +15,7 @@ router.get("/fetchallnotes", fetchuser, async (req, res) => {
   res.json(notes);
 });
 
+//ADD NOTES
 router.post(
   "/addnote",
   fetchuser,
@@ -43,6 +45,7 @@ router.post(
   }
 );
 
+//UPDATE NOTES
 router.put("/updatenote/:id", fetchuser, async (req, res) => {
   const { title, content } = req.body;
   try{
@@ -72,6 +75,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
   }
 });
 
+//DELETE NOTES
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try{
     const note = await db.collection("Notes").findOne({_id : new ObjectId(req.params.id)});
