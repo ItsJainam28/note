@@ -2,9 +2,11 @@ import express from "express";
 import db from "./db.mjs";
 import authApi from "./routes/auth.mjs";
 import notesApi from "./routes/Note.mjs";
+import cors from "cors";
+
 const app = express();
 const PORT = process.env.PORT || 5000;
-
+app.use(cors());
 app.use(express.json());
 
 app.use((err, _req, res, next) => {
