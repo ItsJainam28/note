@@ -15,10 +15,12 @@ export default function NoteItem(props) {
           <h5 className="card-title">{note.title}</h5>
           <p className="card-text">{note.content}</p>
           <i
-            className="fa-solid fa-pen-to-square mx-1"  onClick={() => {updateNote(note)}}
+          
+            className="fa-solid fa-pen-to-square mx-1" style={{ cursor: "pointer" }}  onClick={() => {updateNote(note)}}
           ></i>
           <i
             className="fa-solid fa-trash mx-1"
+            style={{ cursor: "pointer" }}
             onClick={() => deleteNote(note._id)}
           ></i>
         </div>
