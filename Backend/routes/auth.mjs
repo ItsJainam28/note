@@ -5,8 +5,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import fetchuser from "../middleware/fetchuser.mjs";
 import { ObjectId } from "mongodb";
+import { s } from "node-opcua";
 
 
+
+let sucess = false;
 const router = express.Router();
 const JWT_SECRET_KEY = "Legend";
 //Create a user using: POST "/api/auth/". Doesn't require Auth
@@ -25,33 +28,33 @@ body('email', "Enter a valid email").isEmail(), body("password", "Enter valid Pa
         db.collection("Users").insertOne(user);
         let data = {user: {id: user.id}};
         const jwtToken = await jwt.sign(data, JWT_SECRET_KEY);
-        console.log(jwtToken);
-        res.json(jwtToken);
+        sucess = true;
+        res.json(jwtToken, sucess);
     } catch (error) {res.status(401).send("Please enter unique email id");
         console.log(error);
     }
+    
   });
 
-//Authenticate a user using: POST "/api/auth/login". No login required
-router.post('/login', [body('email', "Enter a valid email").isEmail(), body("password", "Enter valid Password").exists()], async(req, res) => { 
-
+//Authenticate a user using: POST "/api/auth/login".
+router.post('/login', [body('email', "Enter a valid email").isEmail(), body("password", "Enter valid Password").exists()], async (req, res) => {
+    // Server Side Validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const {email, password} = req.body;
-    try{
-        let user = await db.collection("Users").findOne({email});
-        if(!user){
-            return res.status(400).json({error: "Please try to login with correct credentials"});
+    const { email, password } = req.body;
 
+    try {
+        let user = await db.collection("Users").findOne({ email });
+        if (!user) {
+            return res.status(400).json({ error: "User not found. Please try to login with correct credentials." });
         }
 
         const passwordCompare = await bcrypt.compare(password, user.secPass);
-        console.log(user.password);
-        if(!passwordCompare){
-            return res.status(400).json({error: "Please try to login with correct credentials"});
+        if (!passwordCompare) {
+            return res.status(400).json({ error: "Incorrect password. Please try to login with correct credentials." });
         }
 
         const data = {
@@ -61,12 +64,10 @@ router.post('/login', [body('email', "Enter a valid email").isEmail(), body("pas
         }
 
         const jwtToken = jwt.sign(data, JWT_SECRET_KEY);
-        res.json({jwtToken});
-
-
-    }
-    catch(error){
-        console.log(error);
+       sucess = true;
+        res.json({ jwtToken }, sucess);
+    } catch (error) {
+        console.error(error);
         res.status(500).send("Internal Server Error");
     }
 });
@@ -82,7 +83,8 @@ router.post('/getuser', fetchuser, async(req, res) => {
             email: user.email,
             Userid: newId
         }
-        res.send(newUser);
+        sucess = true;
+        res.send(newUser, sucess);
     }
     catch(error){
         console.log(error);

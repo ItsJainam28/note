@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { NoteContext } from "../Context/Notecontext";
 import NoteItem from "./NoteItem";
 
+
+
 export default function Displaynotes() {
-  // I need to create a function that shows all the notes\
   const context = useContext(NoteContext);
   const { notes, getNotes, editNote } = context;
   useEffect(() => {
-    getNotes();
+    if(localStorage.getItem("jwt")){
+      getNotes();
+    }
   }, []);
 
 
@@ -51,7 +54,7 @@ const handleUpdateButton = () => {
       <div
         className="modal fade"
         id="exampleModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >

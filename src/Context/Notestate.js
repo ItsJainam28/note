@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { NoteContext } from "./Notecontext";
 
+
+
+
+let jwtToken = localStorage.getItem("jwt");
+
 const NoteState = (props) => {
   const initialNotes = [];  
   const host = "http://localhost:5000";
@@ -12,11 +17,11 @@ const NoteState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNzAwNTExNDk4fQ.Ubbe-SBT8MmyMXdYhLkYY-Y-Aj5Dt8VRRExAH2AEfUo",
+        "auth-token":jwtToken,
       }
     });
-
     const json = await response.json();
+    
     setNotes(json);
   }
   //Add note
@@ -28,7 +33,7 @@ const NoteState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNzAwNTExNDk4fQ.Ubbe-SBT8MmyMXdYhLkYY-Y-Aj5Dt8VRRExAH2AEfUo",
+        "auth-token":jwtToken ,
       },
       body: JSON.stringify({ title, content }),
     });
@@ -45,8 +50,7 @@ const NoteState = (props) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "auth-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNzAwNTExNDk4fQ.Ubbe-SBT8MmyMXdYhLkYY-Y-Aj5Dt8VRRExAH2AEfUo",
+          "auth-token": jwtToken,
         }
       });
     console.log("I am deleting", noteId);
@@ -63,7 +67,7 @@ const NoteState = (props) => {
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7fSwiaWF0IjoxNzAwNTExNDk4fQ.Ubbe-SBT8MmyMXdYhLkYY-Y-Aj5Dt8VRRExAH2AEfUo",
+          jwtToken,
         "body": JSON.stringify({ title, content })     
         },
       body: JSON.stringify({ title, content }),
