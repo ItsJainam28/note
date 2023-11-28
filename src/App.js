@@ -6,21 +6,25 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NoteState from "./Context/Notestate";
 import Login from "./Components/Login";
 import { useLocation } from "react-router-dom";
+import Signup from "./Components/Signup";
 
 function App() {
-  const location = useLocation();
-  const isNavbarVisible = !location.pathname.startsWith("/login");
+
+
+
 
   return (
     <>
       <NoteState>
        
-          {isNavbarVisible&& <Navbar />}
+           <Navbar />
           <div>
             <Routes>
               <Route path="/" element={<Maincontent />} />
               <Route path="/about" element={<About/>} />
               <Route path="/login" element={<Login/>} />
+              <Route path="/signup" element={<Signup/>} />
+
             </Routes>
           </div>
 

@@ -26,13 +26,13 @@ router.post(
         return;
       }
       const { title, content } = req.body;
-      console.log(title, content);
+     
       const newNote = {
         title,
         content,
         userId: new ObjectId(req.user.id),
       };
-      console.log(newNote);
+
       const response = await db.collection("Notes").insertOne(newNote);
       res.send(newNote);
     } catch (error) {
@@ -79,10 +79,10 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
     let noteUserId = new ObjectId(note.userId);
    
     let userId = new ObjectId(req.user.id);
-    console.log(userId.toString(), noteUserId.toString());
+
 
     if(noteUserId.toString() ===! userId.toString()){
-      console.log(noteUserId.toString() !== userId.toString());
+     
       return res.status(401).send("Not Allowed to delete the note");
     }
   const response = await db

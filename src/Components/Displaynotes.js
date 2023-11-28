@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { NoteContext } from "../Context/Notecontext";
 import NoteItem from "./NoteItem";
-
+import { useNavigate } from "react-router-dom";
 
 
 export default function Displaynotes() {
+  const navigation = useNavigate();
   const context = useContext(NoteContext);
   const { notes, getNotes, editNote } = context;
   useEffect(() => {
     if(localStorage.getItem("jwt")){
       getNotes();
+    }else{
+      navigation("/login");
     }
   }, []);
 
@@ -111,8 +114,8 @@ const handleUpdateButton = () => {
         </div>
       </div>
       <div className="container my-3">
-        {notes.map((note, index) => {
-     
+    
+        {notes.map((note) => {
           return <NoteItem  updateNote={() => updateNote(note)} note={note} />;
         })}
       </div>

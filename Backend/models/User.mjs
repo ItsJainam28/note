@@ -13,15 +13,11 @@ db.createCollection("Users", {
              password: {
                 bsonType: "string",
                 description: "must be a string and is required"
-             },
-             email: {
-                bsonType: "string",
-                pattern: "^.+@.+\..+$",
-                description: "must be a string and match the email pattern"
              }
           }
        }
     }
 })
 
-
+const usersCollection = db.collection('Users');
+usersCollection.createIndex({ email: 1 }, { unique: true }, {required: true});

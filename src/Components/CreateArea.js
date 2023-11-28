@@ -24,19 +24,17 @@ export default function CreateArea(){
         setExpanded(false); }
 
     return(
-        <div className="create-notes col-12 col-md-6">
-            <form>
-                {<input type="text" className="form-control my-3" 
+        <div className=" create-notes  col-md-6">
+            <form className="container-fluid grid gap-0">
+                {<input type="text" className={"rounded-top  container-fluid row shadow p-2 border border-bottom-0  p-2 g-col-6"} 
                 placeholder="Create a note.." 
                 onClick={handleExpanded} 
                 onChange={handleChange} 
                 name="title"
                 id="title"
-
                 />}
-                <div className="form-floating my-2">
-                    {isExpanded && <textarea
-                        className="form-control"
+             {isExpanded && <textarea
+                        className=" rounded-bottom container-fluid row shadow p-2  p-2 g-col-6  border border-top-0 create-textarea"
                         style={{height: "100px"}}
                         value={note.content}
                         name="content"
@@ -46,7 +44,6 @@ export default function CreateArea(){
                     ></textarea>}
                 {isExpanded &&<button type="button" className="btn btn-success my-2 " onClick={handleCreate}>Create</button>}
                 {isExpanded &&<button type="button" className="btn btn-danger my-2 mx-2" onClick={handleCancel}>Cancel</button>}
-                </div>
             </form>
         </div>
     )}

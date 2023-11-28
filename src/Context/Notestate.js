@@ -7,9 +7,9 @@ import { NoteContext } from "./Notecontext";
 let jwtToken = localStorage.getItem("jwt");
 
 const NoteState = (props) => {
-  const initialNotes = [];  
+  let initialNotes = [];  
   const host = "http://localhost:5000";
-  const [notes, setNotes] = useState(initialNotes);
+  const [notes, setNotes] = useState([]);
 
   const getNotes = async () => {
     const url = `${host}/api/Note/fetchallnotes`;
@@ -20,8 +20,8 @@ const NoteState = (props) => {
         "auth-token":jwtToken,
       }
     });
-    const json = await response.json();
-    
+    const json = await response.json(); 
+    console.log(json);
     setNotes(json);
   }
   //Add note

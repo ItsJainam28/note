@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.create-textarea {
+  margin-top: -0.25rem !important;
+}
+.welcome-heading {
+  margin-left: 6rem !important;
+  margin-right: 6rem !important;
+
+}
