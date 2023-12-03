@@ -1,8 +1,14 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../Context/AuthContext';
 export default function Navbar() {
   const navigate = useNavigate();
+
+  const authcontext = useContext(AuthContext);
+  const {jwtToken, setJwt} = authcontext;
+
     return (
       <nav className="navbar navbar-expand-lg bg-body-tertiary  shadow p-3 mb-5 bg-body-tertiary ">
         <div className="container-fluid">
@@ -46,7 +52,7 @@ export default function Navbar() {
               </li>
             </ul>
 
-            {!localStorage.getItem("jwt") ? (
+            {jwtToken == null ? (
               <form className="d-flex" role="userprofile">
                 <Link className="btn btn-outline-success mx-2" to="/login">
                   Login
@@ -63,7 +69,9 @@ export default function Navbar() {
               <button
                 className="btn btn-outline-success mx-2"
                 onClick={() => {
+                  console.log(jwtToken);
                   localStorage.removeItem("jwt");
+                  setJwt(null);
                   navigate("/login");
                 }}
               >

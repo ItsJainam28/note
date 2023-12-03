@@ -1,8 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { NoteContext } from "../Context/Notecontext";
+import { AuthContext } from "../Context/AuthContext";
+
 
 export default function Login(){
+  const context = useContext(NoteContext);
+  const authcontext = useContext(AuthContext);
+  const {jwtToken, setJwt} = authcontext;
+  const { getNotes } = context;
     const [credentials, setCredentials] = useState({email:"", password:""});
     const navigate = useNavigate();
     const onChange = (e) => {
@@ -22,11 +30,12 @@ export default function Login(){
 
         if(json.success === true){
         localStorage.setItem('jwt', json.jwtToken);
+        setJwt(localStorage.getItem('jwt'));
+        console.log("Jwt token", jwtToken)
         navigate("/");}
         else{
             alert("Invalid Credentials");
         }
-    
     }
     return(
         <div className="container">

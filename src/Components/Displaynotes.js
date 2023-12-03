@@ -2,14 +2,19 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { NoteContext } from "../Context/Notecontext";
 import NoteItem from "./NoteItem";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 
 export default function Displaynotes() {
   const navigation = useNavigate();
   const context = useContext(NoteContext);
+  const authcontext = useContext(AuthContext);
+
+  const {jwtToken} = authcontext;
   const { notes, getNotes, editNote } = context;
   useEffect(() => {
-    if(localStorage.getItem("jwt")){
+    if(jwtToken !== null){
+      console.log("jwtToken", jwtToken);
       getNotes();
     }else{
       navigation("/login");
@@ -115,7 +120,7 @@ const handleUpdateButton = () => {
       </div>
       <div className="container my-3">
     
-        {localStorage.getItem('jwt') && notes.map((note) => {
+        {!jwtToken == '' && notes.map((note) => {
           return <NoteItem  updateNote={() => updateNote(note)} note={note} />;
         })}
       </div>

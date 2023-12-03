@@ -1,8 +1,11 @@
 import React , {useState}from "react";
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from "../Context/AuthContext";
+import { useContext } from "react";
 export default function Signup(){
     const [credentials, setCredentials] = useState({username:"", email:"", password:"", cpassword:""});
+    const context = useContext(AuthContext);
+    const { setJwt} = context;
 
     const onChange = (e) => {
         setCredentials({...credentials, [e.target.name]:e.target.value})
@@ -33,6 +36,7 @@ export default function Signup(){
         // console.log(json);
         if(json.sucess){
         localStorage.setItem('jwt', json.jwtToken);
+        setJwt(json.jwtToken);
         navigate("/");}
        
         else{

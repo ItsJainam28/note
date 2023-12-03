@@ -2,21 +2,19 @@ import "./App.css";
 import About from "./Components/About";
 import Maincontent from "./Components/Maincontent";
 import Navbar from "./Components/Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {  Routes, Route } from "react-router-dom";
 import NoteState from "./Context/Notestate";
 import Login from "./Components/Login";
-import { useLocation } from "react-router-dom";
+
 import Signup from "./Components/Signup";
+import Authstate from "./Context/Authstate";
 
 function App() {
 
-
-
-
   return (
     <>
+      <Authstate>
       <NoteState>
-       
            <Navbar />
           <div>
             <Routes>
@@ -29,6 +27,7 @@ function App() {
           </div>
 
       </NoteState>
+      </Authstate>
     </>
   );
 }
