@@ -7,9 +7,11 @@ import { ObjectId } from "mongodb";
 const router = express.Router();
 
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
+  console.log(req.user);
+
   const notes = await db
     .collection("Notes")
-    .find({ user: req.user.id })
+    .find({ userId: new ObjectId(req.user.id) })
     .toArray();
   res.json(notes);
 });

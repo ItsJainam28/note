@@ -115,7 +115,7 @@ const handleUpdateButton = () => {
       </div>
       <div className="container my-3">
     
-        {notes.map((note) => {
+        {localStorage.getItem('jwt') && notes.map((note) => {
           return <NoteItem  updateNote={() => updateNote(note)} note={note} />;
         })}
       </div>

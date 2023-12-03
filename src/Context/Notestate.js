@@ -7,6 +7,7 @@ import { NoteContext } from "./Notecontext";
 let jwtToken = localStorage.getItem("jwt");
 
 const NoteState = (props) => {
+
   let initialNotes = [];  
   const host = "http://localhost:5000";
   const [notes, setNotes] = useState([]);
