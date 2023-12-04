@@ -28,11 +28,15 @@ export default function Displaynotes() {
 
   const updateNote = (currentNote) => {
     ref.current.click();
-    setNote({
-        etitle:currentNote.title,
-        econtent:currentNote.content,
-        id : currentNote._id
-    });
+    if (currentNote) {
+      ref.current.click();
+      setNote({
+        etitle: currentNote.title,
+        econtent: currentNote.content,
+        id: currentNote._id,
+      });
+    }
+    getNotes();
   };
   function handleChange(event){
     const {name, value} = event.target;
@@ -43,9 +47,20 @@ export default function Displaynotes() {
         };
     });
 }
+const mapNotes = () => { 
+  if(notes.length === 0){
+    return "No notes to display";
+  }else if(notes.length > 0&& jwtToken !== null){
+    return notes.map((note) => {
+      return <NoteItem  updateNote={() => updateNote(note)} note={note} />;
+    });
+  }
+
+};
 const handleUpdateButton = () => {
     editNote(note.id, note.etitle, note.econtent);
     getNotes();
+    updateNote();
     refClose.current.click();
 }
   return (
@@ -56,7 +71,6 @@ const handleUpdateButton = () => {
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
         ref={ref}
-    
       ></button>
 
       <div
@@ -119,10 +133,7 @@ const handleUpdateButton = () => {
         </div>
       </div>
       <div className="container my-3">
-    
-        {!jwtToken == '' && notes.map((note) => {
-          return <NoteItem  updateNote={() => updateNote(note)} note={note} />;
-        })}
+        {mapNotes()}
       </div>
     </>
   );

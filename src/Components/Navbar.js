@@ -67,7 +67,7 @@ export default function Navbar() {
               </form>
             ) : (
               <button
-                className="btn btn-outline-success mx-2"
+                className="btn btn-outline-success "
                 onClick={() => {
                   console.log(jwtToken);
                   localStorage.removeItem("jwt");

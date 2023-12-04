@@ -29,7 +29,7 @@ const NoteState = (props) => {
   //Add note
   const addNote = async (title, content) => {
     //Api call
-  let jwtToken = localStorage.getItem("jwt");
+
 
     let note ={}
     const url = `${host}/api/Note/addnote`;
@@ -49,7 +49,7 @@ const NoteState = (props) => {
   //Delete note
   const deleteNote = async (noteId) => {
     const url = `${host}/api/Note/deletenote/${noteId}`;
-    let jwtToken = localStorage.getItem("jwt");
+
 
     const response = await fetch(url, {
         method: "DELETE",
@@ -66,7 +66,6 @@ const NoteState = (props) => {
   };
   //Edit note
   const editNote = async (noteId, title, content) => {
-  let jwtToken = localStorage.getItem("jwt");
 
     const url = `${host}/api/Note/updatenote/${noteId}`;
     const response = await fetch(url, {
@@ -89,6 +88,7 @@ const NoteState = (props) => {
         break;
       }
     }
+   
   };
 
   return (
