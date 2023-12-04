@@ -19,7 +19,7 @@ const NoteState = (props) => {
     const json = await response.json();
     setNotes(json);
   }
-  //Add note
+  //Add notes
   const addNote = async (title, content) => {
     //Api call
     let note ={}
@@ -37,7 +37,7 @@ const NoteState = (props) => {
     setNotes(notes.concat(note));
     console.log(notes);
   };
-  //Delete note
+  //DELETE NOTES
   const deleteNote = async (noteId) => {
     const url = `${host}/api/Note/deletenote/${noteId}`;
 
