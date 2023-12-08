@@ -8,8 +8,8 @@ import { useContext } from "react";
 const NoteState = (props) => {
   const authcontext = useContext(AuthContext);
   let {jwtToken} =  authcontext
-  
-  const host = "http://localhost:5000";
+
+  const host = "https://note-application-d1nr.onrender.com";
   const [notes, setNotes] = useState([]);
 
   const getNotes = async () => {

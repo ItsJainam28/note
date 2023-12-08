@@ -9,12 +9,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+const baseUrl = "https://note-application-d1nr.onrender.com/";
 app.use((err, _req, res, next) => {
     res.status(500).send("Uh oh! An unexpected error occurred.");
   });
 
-app.use("/api/auth", authApi)
-app.use("/api/Note", notesApi)
+app.use(baseUrl+"api/auth", authApi)
+app.use(baseUrl+"/api/Note", notesApi)
 
 app.listen(PORT, ()=>{
   console.log(`Server is running on port: ${PORT}`)
