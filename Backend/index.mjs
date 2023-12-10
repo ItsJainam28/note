@@ -3,22 +3,14 @@ import db from "./db.mjs";
 import authApi from "./routes/auth.mjs";
 import notesApi from "./routes/Note.mjs";
 import cors from "cors";
-const allowedOrigins = ["https://note-application-7zrk.onrender.com","https://note-application-7zrk.onrender.com/login","https://note-application-7zrk.onrender.com/signup"];
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Origin not allowed by CORS"));
-    }
-  },
+  origin: "*", // Allow all origins
   credentials: true,
   optionsSuccessStatus: 200,
 };
-
 // Use the custom CORS configuration
 app.use(cors(corsOptions));
 app.use(express.json());
