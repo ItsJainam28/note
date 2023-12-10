@@ -21,9 +21,8 @@ app.use((err, _req, res, next) => {
     res.status(500).send("Uh oh! An unexpected error occurred.");
   });
 
-app.use(baseUrl+"api/auth", authApi)
-app.use(baseUrl+"api/Note", notesApi)
-
+  app.use("/api/auth", authApi);
+  app.use("/api/Note", notesApi);
 app.listen(PORT, ()=>{
   console.log(`Server is running on port: ${PORT}`)
 })
