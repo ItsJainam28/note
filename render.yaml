@@ -1,0 +1,7 @@
+staticSites:
+  - name: my-app
+    buildCommand: npm run build
+    publishDir: build
+    routes:
+      - src: /.*
+        dest: /index.html
