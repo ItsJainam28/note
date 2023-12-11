@@ -3,7 +3,7 @@ import { NoteContext } from "../Context/Notecontext";
 import NoteItem from "./NoteItem";
 
 export default function Displaynotes() {
-  // I need to create a function that shows all the notes\
+  // I need to create a function that displays all the notes\
   const context = useContext(NoteContext);
   const { notes, getNotes, editNote } = context;
   useEffect(() => {
